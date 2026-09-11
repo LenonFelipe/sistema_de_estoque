@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Estoque da Confeitaria</title>
+
+    <link
+        rel="stylesheet"
+        href="./css/style.css"
+    >
+</head>
+
+<body>
+
+    <div class="app">
+
+        <aside class="sidebar">
+
+            <div class="logo">
+                <span>📦</span>
+
+                <div>
+                    <strong>Estoque</strong>
+                    <small>Confeitaria</small>
+                </div>
+            </div>
+
+            <nav>
+
+                <button
+                    class="menu-button active"
+                    data-page="dashboard"
+                >
+                    🏠 Início
+                </button>
+
+                <button
+                    class="menu-button"
+                    data-page="produtos"
+                >
+                    📦 Produtos
+                </button>
+
+                <button
+                    class="menu-button"
+                    data-page="movimentacao"
+                >
+                    🔄 Movimentação
+                </button>
+
+                <button
+                    class="menu-button"
+                    data-page="alertas"
+                >
+                    🚨 Estoque crítico
+                </button>
+
+            </nav>
+
+        </aside>
+
+        <main class="main-content">
+
+            <header class="topbar">
+
+                <div>
+                    <h1 id="page-title">
+                        Início
+                    </h1>
+
+                    <p id="page-subtitle">
+                        Controle do estoque da confeitaria
+                    </p>
+                </div>
+
+            </header>
+
+
+            <section
+                id="page-dashboard"
+                class="page active"
+            >
+
+                <div class="welcome">
+
+                    <h2>
+                        Olá! 👋
+                    </h2>
+
+                    <p>
+                        O que você deseja fazer?
+                    </p>
+
+                </div>
+
+
+                <div class="quick-actions">
+
+                    <button
+                        class="action-card"
+                        data-page="produtos"
+                        data-action="novo"
+                    >
+
+                        <span>➕</span>
+
+                        <strong>
+                            Cadastrar produto
+                        </strong>
+
+                        <small>
+                            Adicione um novo ingrediente
+                        </small>
+
+                    </button>
+
+
+                    <button
+                        class="action-card"
+                        data-page="produtos"
+                    >
+
+                        <span>📦</span>
+
+                        <strong>
+                            Ver estoque
+                        </strong>
+
+                        <small>
+                            Consulte seus ingredientes
+                        </small>
+
+                    </button>
+
+
+                    <button
+                        class="action-card"
+                        data-page="movimentacao"
+                    >
+
+                        <span>🔄</span>
+
+                        <strong>
+                            Registrar movimentação
+                        </strong>
+
+                        <small>
+                            Entrada, saída ou perda
+                        </small>
+
+                    </button>
+
+
+                    <button
+                        class="action-card"
+                        data-page="alertas"
+                    >
+
+                        <span>🚨</span>
+
+                        <strong>
+                            Ver estoque crítico
+                        </strong>
+
+                        <small>
+                            Veja o que precisa comprar
+                        </small>
+
+                    </button>
+
+                </div>
+
+
+                <div class="dashboard-cards">
+
+                    <div class="summary-card">
+
+                        <span>📦</span>
+
+                        <div>
+                            <small>
+                                Produtos cadastrados
+                            </small>
+
+                            <strong id="total-products">
+                                0
+                            </strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="summary-card danger">
+
+                        <span>🚨</span>
+
+                        <div>
+                            <small>
+                                Estoques críticos
+                            </small>
+
+                            <strong id="total-critical">
+                                0
+                            </strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <section
+                id="page-produtos"
+                class="page"
+            >
+
+                <div class="section-header">
+
+                    <div>
+                        <h2>
+                            Produtos
+                        </h2>
+
+                        <p>
+                            Consulte e gerencie seus ingredientes.
+                        </p>
+                    </div>
+
+                    <button
+                        id="btn-new-product"
+                        class="primary-button"
+                    >
+                        ➕ Cadastrar produto
+                    </button>
+
+                </div>
+
+
+                <!-- FORMULÁRIO -->
+
+                <div
+                    id="product-form-container"
+                    class="form-card hidden"
+                >
+
+                    <h3 id="form-title">
+                        Cadastrar produto
+                    </h3>
+
+                    <form id="product-form">
+
+                        <input
+                            type="hidden"
+                            id="product-id"
+                        >
+
+                        <div class="form-grid">
+
+                            <div class="form-group">
+
+                                <label for="product-name">
+                                    Nome do produto
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="product-name"
+                                    placeholder="Ex: Farinha de Trigo"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="product-unit">
+                                    Unidade de medida
+                                </label>
+
+                                <select
+                                    id="product-unit"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Selecione
+                                    </option>
+
+                                    <option value="kg">
+                                        Quilograma (kg)
+                                    </option>
+
+                                    <option value="g">
+                                        Grama (g)
+                                    </option>
+
+                                    <option value="unidade">
+                                        Unidade
+                                    </option>
+
+                                    <option value="litro">
+                                        Litro
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="product-minimum">
+                                    Estoque mínimo
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="product-minimum"
+                                    min="0"
+                                    step="0.01"
+                                    placeholder="Ex: 5"
+                                    required
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-actions">
+
+                            <button
+                                type="button"
+                                id="btn-cancel-form"
+                                class="secondary-button"
+                            >
+                                Cancelar
+                            </button>
+
+                            <button
+                                type="submit"
+                                class="primary-button"
+                            >
+                                Salvar produto
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+
+                <!-- TABELA -->
+
+                <div class="table-card">
+
+                    <div class="table-header">
+
+                        <h3>
+                            Ingredientes cadastrados
+                        </h3>
+
+                        <button
+                            id="btn-refresh-products"
+                            class="secondary-button"
+                        >
+                            🔄 Atualizar
+                        </button>
+
+                    </div>
+
+                    <div class="table-wrapper">
+
+                        <table>
+
+                            <thead>
+
+                                <tr>
+                                   <th>Produto</th>
+<th>Unidade</th>
+<th>Estoque atual</th>
+<th>Estoque mínimo</th>
+<th>Ações</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="products-table">
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <section
+                id="page-movimentacao"
+                class="page"
+            >
+
+                <div class="section-header">
+
+                    <div>
+
+                        <h2>
+                            Movimentação
+                        </h2>
+
+                        <p>
+                            Registre entradas, saídas e perdas.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="movement-grid">
+
+                    <button
+                        class="movement-card entrada"
+                        data-type="ENTRADA"
+                    >
+
+                        <span>📥</span>
+
+                        <strong>
+                            Entrada
+                        </strong>
+
+                        <small>
+                            Produto comprado ou recebido
+                        </small>
+
+                    </button>
+
+
+                    <button
+                        class="movement-card saida"
+                        data-type="SAIDA"
+                    >
+
+                        <span>📤</span>
+
+                        <strong>
+                            Saída
+                        </strong>
+
+                        <small>
+                            Produto utilizado na produção
+                        </small>
+
+                    </button>
+
+
+                    <button
+                        class="movement-card perda"
+                        data-type="PERDA"
+                    >
+
+                        <span>⚠️</span>
+
+                        <strong>
+                            Perda
+                        </strong>
+
+                        <small>
+                            Produto perdido ou danificado
+                        </small>
+
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="movement-form-container"
+                    class="form-card hidden"
+                >
+
+                    <h3 id="movement-title">
+                        Registrar movimentação
+                    </h3>
+
+                    <form id="movement-form">
+
+                        <div class="form-grid">
+
+                            <div class="form-group">
+
+                                <label for="movement-product">
+                                    Produto
+                                </label>
+
+                                <select
+                                    id="movement-product"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Selecione um produto
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="movement-quantity">
+                                    Quantidade
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="movement-quantity"
+                                    min="0.01"
+                                    step="0.01"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="form-group full">
+
+                                <label for="movement-reason">
+                                    Motivo
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="movement-reason"
+                                    placeholder="Ex: Compra de farinha"
+                                    required
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-actions">
+
+                            <button
+                                type="button"
+                                id="btn-cancel-movement"
+                                class="secondary-button"
+                            >
+                                Cancelar
+                            </button>
+
+                            <button
+                                type="submit"
+                                class="primary-button"
+                            >
+                                Registrar
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </section>
+
+
+            <section
+                id="page-alertas"
+                class="page"
+            >
+
+                <div class="section-header">
+
+                    <div>
+
+                        <h2>
+                            🚨 Estoque crítico
+                        </h2>
+
+                        <p>
+                            Produtos que precisam de atenção.
+                        </p>
+
+                    </div>
+
+                    <button
+                        id="btn-refresh-alerts"
+                        class="secondary-button"
+                    >
+                        🔄 Atualizar
+                    </button>
+
+                </div>
+
+
+                <div id="alerts-container">
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <div
+        id="toast"
+        class="toast"
+    >
+    </div>
+
+
+    <script src="./js/app.js"></script>
+
+</body>
+
+</html>
